@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -20,8 +20,8 @@ public class Time {
     private String nome;
 
     @OneToMany(mappedBy = "timeA")
-    private ArrayList<Jogo> jogosA;
+    private List<Jogo> jogosA;
 
     @OneToMany(mappedBy = "timeB")
-    private ArrayList<Jogo> jogosB;
+    private List<Jogo> jogosB;
 }

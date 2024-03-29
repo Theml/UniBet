@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TimeDTO extends JpaRepository<Time, Integer> {
 
+    Time findByNome(String nome);
 }

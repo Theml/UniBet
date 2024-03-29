@@ -22,7 +22,7 @@ public class UnibetApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("########### Inciando carregamendo dos dados ############");
+		System.out.println("########### Inciando carregamento dos dados ############");
 
 		Time time = new Time(1,"Flamengo", null,null);
 		Time time1 = new Time(2,"Vasco", null,null);
