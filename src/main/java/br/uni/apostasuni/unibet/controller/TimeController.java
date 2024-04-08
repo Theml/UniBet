@@ -1,8 +1,9 @@
 package br.uni.apostasuni.unibet.controller;
 
 import br.uni.apostasuni.unibet.model.Time;
-import br.uni.apostasuni.unibet.model.dao.TimeDTO;
+import br.uni.apostasuni.unibet.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,23 +12,48 @@ import org.springframework.web.bind.annotation.*;
 public class TimeController {
 
     @Autowired
-    TimeDTO tDto;
-    @PostMapping("")
-    public ResponseEntity<?> saveTime(@RequestBody (required = true) Time time) {
+    TimeService timeService;
 
-        if(time.getNome().isEmpty() || time.getNome().isBlank()) {
-            return ResponseEntity.badRequest().body("Nome não pode ser vazio!!!");
+    @PostMapping("")
+    public ResponseEntity<?> saveTime(@RequestBody (required = true)Time time) {
+        try {
+            Time timeResp = timeService.verifySave(time);
+            return ResponseEntity.status(HttpStatus.CREATED).body(timeResp);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        Time t = tDto.findByNome(time.getNome());
-        if (t == null) {
-            time = tDto.save(time);
-            return ResponseEntity.ok(time);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteTime(@PathVariable (required = true) int id){
+        try {
+            timeService.removeTime(id);
+            return ResponseEntity.ok("Time apagado com sucesso.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return ResponseEntity.ok("Não pode salvar!!");
     }
 
     @GetMapping("")
     public ResponseEntity<?> getTime() {
-        return ResponseEntity.ok(tDto.findAll());
+
+        return ResponseEntity.ok(timeService.findAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getTimeByNome(@PathVariable (required = true) int id) {
+        return ResponseEntity.ok(timeService.find(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> changeTime(@PathVariable(required = true) int id,
+                                        @RequestBody Time time) {
+        try {
+            Time t = timeService.updateTime(id, time);
+            return ResponseEntity.ok(t);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,7 +24,12 @@ public class Usuario {
     private boolean ehAdmin;
 
     @OneToMany
-    @JoinColumn(name = "id_minhas_apostas")
-    private ArrayList<Aposta> minhasApostas;
+    private List<Aposta> minhasApostas;
+
+    public void sacar(double valorAposta) {
+        if(valorAposta > 0 && valorAposta <= saldo) {
+            saldo -= valorAposta;
+        }
+    }
 
 }

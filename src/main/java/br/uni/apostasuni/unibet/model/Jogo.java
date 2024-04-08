@@ -18,9 +18,8 @@ public class Jogo {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  int idJogo;
 
-    private double oddsVitoriaTimeA, oddsVitoriaTimeB, oddsEmpate;
-
     private LocalDateTime dataJogo;
+    private double oddsVitoriaTimeA, oddsVitoriaTimeB, oddsEmpate;
 
     @ManyToOne
     @JoinColumn(name = "id_time_A")

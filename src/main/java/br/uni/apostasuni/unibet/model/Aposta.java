@@ -15,13 +15,13 @@ public class Aposta {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
 
-    @ManyToOne
-    private Jogo jogo;
+    private  double valorAposta;
 
     @ManyToOne
     private Usuario jogador;
 
-    private  double valorAposta;
+    @ManyToOne
+    private Jogo jogo;
 
     private ETipoResultado aposta;
 }
