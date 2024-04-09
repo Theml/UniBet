@@ -33,4 +33,25 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable (required = true) int id,
+                                        @RequestBody Usuario usuario){
+        try {
+            Usuario user = userService.updateUser(id, usuario);
+            return ResponseEntity.ok(user);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeUser(@PathVariable (required = true) int id){
+        try {
+            userService.removeUser(id);
+            return ResponseEntity.ok("Usuário removido com sucesso!");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
