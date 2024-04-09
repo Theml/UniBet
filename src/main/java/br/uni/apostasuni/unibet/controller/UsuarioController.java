@@ -1,11 +1,11 @@
 package br.uni.apostasuni.unibet.controller;
 
+import br.uni.apostasuni.unibet.model.Usuario;
 import br.uni.apostasuni.unibet.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -16,7 +16,21 @@ public class UsuarioController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllUsers() {
-
         return ResponseEntity.ok(userService.findAllUser());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable (required = true) int id) throws Exception {
+        return ResponseEntity.ok(userService.findById(id));
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> addUser(@RequestBody (required = true)Usuario usuario){
+        try {
+            Usuario userResp = userService.verifySave(usuario);
+            return ResponseEntity.status(HttpStatus.CREATED).body(userResp);
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
