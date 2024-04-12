@@ -27,7 +27,7 @@ public class ApostaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> retornarAposta(@PathVariable (required = true) Integer id) throws Exception {
+    public ResponseEntity<?> retornarAposta(@PathVariable (required = true) int id) throws Exception {
         try {
             ApostaViewDTO a = apoServ.getAposta(id);
             return ResponseEntity.ok(a);
@@ -38,7 +38,25 @@ public class ApostaController {
     }
 
     @GetMapping("/usuario/{id}")
-    public ResponseEntity<?> getApostaByUser(@PathVariable (required = true) Integer id) {
+    public ResponseEntity<?> getApostaByUser(@PathVariable (required = true) int id) {
         return ResponseEntity.ok(apoServ.getApostaUsuario(id));
+    }
+
+    @GetMapping("/usuario/{id}/count")
+    public ResponseEntity<?> getAllUserAposta(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok( apoServ.getAllUserAposta(id));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}/resultado")
+    public ResponseEntity<?> getApostaResult(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok( apoServ.getApostaPriceReceive(id));
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

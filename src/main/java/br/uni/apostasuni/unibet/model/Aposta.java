@@ -18,7 +18,7 @@ public class Aposta {
     private  double valorAposta;
 
     @ManyToOne
-    private Usuario jogador;
+    private Usuario user;
 
     @ManyToOne
     private Jogo jogo;

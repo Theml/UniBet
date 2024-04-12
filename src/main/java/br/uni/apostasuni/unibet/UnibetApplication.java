@@ -4,7 +4,6 @@ import br.uni.apostasuni.unibet.model.ETipoResultado;
 import br.uni.apostasuni.unibet.model.Jogo;
 import br.uni.apostasuni.unibet.model.Time;
 import br.uni.apostasuni.unibet.model.Usuario;
-import br.uni.apostasuni.unibet.model.dao.ApostaDAO;
 import br.uni.apostasuni.unibet.model.dao.JogoDAO;
 import br.uni.apostasuni.unibet.model.dao.TimeDAO;
 import br.uni.apostasuni.unibet.model.dao.UsuarioDAO;
@@ -32,8 +31,6 @@ public class UnibetApplication implements CommandLineRunner {
 	@Autowired
 	JogoDAO jDAO;
 
-	@Autowired
-	ApostaDAO aDAO;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -58,11 +55,11 @@ public class UnibetApplication implements CommandLineRunner {
 				0.8, 0.2, 0.1, time, time1,
 				0, 0, ETipoResultado.AGUARDANDO);
 
-		Jogo j1 = new Jogo(1, LocalDateTime.now(),
+		Jogo j1 = new Jogo(2, LocalDateTime.now(),
 				1.8, 0.2, 0.1, time, time1,
 				0, 0, ETipoResultado.VITORIA_A);
 
-		Jogo j2 = new Jogo(1, LocalDateTime.of(2024, 04, 15, 15, 30),
+		Jogo j2 = new Jogo(3, LocalDateTime.of(2024, 04, 15, 15, 30),
 				0.8, 0.2, 0.1, time1, time2,
 				0, 0, ETipoResultado.EMPATE);
 

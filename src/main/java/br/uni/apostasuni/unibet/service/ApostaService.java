@@ -9,6 +9,7 @@ import br.uni.apostasuni.unibet.model.dao.JogoDAO;
 import br.uni.apostasuni.unibet.model.dao.UsuarioDAO;
 import br.uni.apostasuni.unibet.model.dto.ApostaInputDTO;
 import br.uni.apostasuni.unibet.model.dto.ApostaViewDTO;
+import br.uni.apostasuni.unibet.model.dto.ResultadoViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,7 +59,7 @@ public class ApostaService {
         uDAO.save(user.get());
     }
 
-    public ApostaViewDTO getAposta(Integer id) throws Exception{
+    public ApostaViewDTO getAposta(int id) throws Exception{
 
         Optional<Aposta> aposta = aDAO.findById(id);
 
@@ -68,8 +69,8 @@ public class ApostaService {
         ApostaViewDTO ap = new ApostaViewDTO();
         ap.setId(aposta.get().getId());
         ap.setDataJogo(aposta.get().getJogo().getDataJogo());
-        ap.setIdJogador(aposta.get().getJogador().getId());
-        ap.setNomeJogador(aposta.get().getJogador().getNome());
+        ap.setIdJogador(aposta.get().getUser().getId());
+        ap.setNomeJogador(aposta.get().getUser().getNome());
         ap.setTime1( aposta.get().getJogo().getTimeA().getNome());
         ap.setIdTime1(aposta.get().getJogo().getTimeA().getId());
         ap.setTime2(aposta.get().getJogo().getTimeB().getNome());
@@ -83,15 +84,15 @@ public class ApostaService {
     }
 
     public List<ApostaViewDTO> getApostaUsuario(Integer id) {
-       List<Aposta> lista = aDAO.findByJogadorIdAndJogoResultado(id, ETipoResultado.AGUARDANDO);
+       List<Aposta> lista = aDAO.findByUserIdAndJogoResultado(id, ETipoResultado.AGUARDANDO);
 
        List<ApostaViewDTO> listDTO = new ArrayList<>();
        for (Aposta a : lista) {
            ApostaViewDTO ap = new ApostaViewDTO();
            ap.setId(a.getId());
            ap.setDataJogo(a.getJogo().getDataJogo());
-           ap.setIdJogador(a.getJogador().getId());
-           ap.setNomeJogador(a.getJogador().getNome());
+           ap.setIdJogador(a.getUser().getId());
+           ap.setNomeJogador(a.getUser().getNome());
            ap.setTime1( a.getJogo().getTimeA().getNome());
            ap.setIdTime1(a.getJogo().getTimeA().getId());
            ap.setTime2(a.getJogo().getTimeB().getNome());
@@ -104,5 +105,17 @@ public class ApostaService {
            listDTO.add(ap);
        }
        return listDTO;
+    }
+
+    public Integer getAllUserAposta(Integer id) throws Exception {
+        Optional<Usuario> user = uDAO.findById(id);
+        if (!user.isPresent()) {
+            throw new Exception(" Usuário inválido!! ");
+        }
+        return aDAO.countByUserId(id);
+    }
+
+    public ResultadoViewDTO getApostaPriceReceive(Integer id) {
+        return null;
     }
 }
