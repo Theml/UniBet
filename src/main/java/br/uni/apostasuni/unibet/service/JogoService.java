@@ -76,8 +76,11 @@ public class JogoService {
             throw new Exception("Jogo inválido");
         }
         Optional<Time> timeA = tDAO.findById(jogo.getTimeA().getId());
-        if (!timeA.isPresent()) {
-            throw new Exception("");
+        Optional<Time> timeB = tDAO.findById(jogo.getTimeB().getId());
+        if (timeA == timeB) {
+            throw new Exception("Os times precisão ser diferentes");
+        } if(!timeA.isPresent() || !timeB.isPresent()) {
+            throw new Exception("Os times não podem ser vazios");
         }
         LocalDateTime dataJogo = jogo.getDataJogo();
         List<Jogo> jogosNoMesmoHorario = jDAO.findByDataJogo(dataJogo);
