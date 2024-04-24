@@ -6,6 +6,7 @@ import br.uni.apostasuni.unibet.service.JogoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,16 +17,19 @@ public class JogoController {
     JogoService jogoService;
 
     @GetMapping("")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> getJogos() {
         return ResponseEntity.ok(jogoService.findAll());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getJogoById(@PathVariable (required = true) int id) {
         return ResponseEntity.ok(jogoService.findById(id));
     }
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createJogo(@RequestBody JogoInputDTO jogo) {
         try {
             jogoService.createJogo(jogo);
@@ -36,6 +40,7 @@ public class JogoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteJogo(@PathVariable (required = true) int id) {
         try {
             jogoService.deleteJogo(id);
@@ -46,6 +51,7 @@ public class JogoController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateJogo(@PathVariable (required = true) int id,
                                         @RequestBody Jogo jogo) {
         try {
