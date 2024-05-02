@@ -1,6 +1,8 @@
 package br.uni.apostasuni.unibet.config;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import br.uni.apostasuni.unibet.config.filter.JWTAuthenticationFIlter;
+import br.uni.apostasuni.unibet.config.service.UserLoggedService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,12 +25,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Autowired
+    UserLoggedService uService;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
-        auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("123")).roles("APOSTADOR")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("234")).roles("ADMIN");
+        auth.userDetailsService( uService ).passwordEncoder(passwordEncoder());
+//        auth.inMemoryAuthentication()
+//                .withUser("user").password(passwordEncoder().encode("123")).roles("APOSTADOR")
+//                .and()
+//                .withUser("admin").password(passwordEncoder().encode("234")).roles("ADMIN");
     }
 
     @Override
@@ -42,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/aposta/user/**").hasAnyRole("ADMIN", "APOSTADOR")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .addFilter(new JWTAuthenticationFIlter(authenticationManager()));
+//                .addFilter(new JWTValidationFilter(authenticationManager()));
     }
 }

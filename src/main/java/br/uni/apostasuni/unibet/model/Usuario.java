@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 //import jakarta.persistence.*
@@ -18,9 +17,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
-
     private String nome, login, senha, email;
-
     private double saldo;
     private boolean ehAdmin;
 

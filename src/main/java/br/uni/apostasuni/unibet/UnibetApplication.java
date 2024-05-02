@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,8 @@ public class UnibetApplication implements CommandLineRunner {
 	@Autowired
 	JogoDAO jDAO;
 
+	@Autowired
+	PasswordEncoder pass;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -44,9 +47,9 @@ public class UnibetApplication implements CommandLineRunner {
 		dTime.save(time1);
 		dTime.save(time2);
 
-		Usuario u = new Usuario(1, "Luis", "Lu", "123", "theml@gmail.com", 0, true, null);
+		Usuario u = new Usuario(1, "Luis", "Lu", pass.encode("234"), "theml@gmail.com", 0, true, null);
 
-		Usuario u1 = new Usuario(2, "Lua", "Lua", "123", "lua@gmail.com", 10000, false, null);
+		Usuario u1 = new Usuario(2, "Lua", "Lua", pass.encode("123"), "lua@gmail.com", 10000, false, null);
 
 		dUser.save(u);
 		dUser.save(u1);
