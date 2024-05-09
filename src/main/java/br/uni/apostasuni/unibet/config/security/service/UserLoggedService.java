@@ -1,6 +1,6 @@
-package br.uni.apostasuni.unibet.config.service;
+package br.uni.apostasuni.unibet.config.security.service;
 
-import br.uni.apostasuni.unibet.config.model.UserLogged;
+import br.uni.apostasuni.unibet.config.security.model.UserLogged;
 import br.uni.apostasuni.unibet.model.Usuario;
 import br.uni.apostasuni.unibet.model.dao.UsuarioDAO;
 import org.springframework.beans.factory.annotation.Autowired;

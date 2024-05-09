@@ -23,7 +23,7 @@ public class JogoController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getJogoById(@PathVariable (required = true) int id) {
         return ResponseEntity.ok(jogoService.findById(id));
     }

@@ -1,6 +1,6 @@
-package br.uni.apostasuni.unibet.config.filter;
+package br.uni.apostasuni.unibet.config.security.filter;
 
-import br.uni.apostasuni.unibet.config.model.UserLogged;
+import br.uni.apostasuni.unibet.config.security.model.UserLogged;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;

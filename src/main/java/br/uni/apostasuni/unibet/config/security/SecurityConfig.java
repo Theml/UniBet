@@ -1,7 +1,7 @@
-package br.uni.apostasuni.unibet.config;
+package br.uni.apostasuni.unibet.config.security;
 
-import br.uni.apostasuni.unibet.config.filter.JWTAuthenticationFIlter;
-import br.uni.apostasuni.unibet.config.service.UserLoggedService;
+import br.uni.apostasuni.unibet.config.security.filter.JWTAuthenticationFIlter;
+import br.uni.apostasuni.unibet.config.security.service.UserLoggedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeHttpRequests()
                 .antMatchers("/dev/**").permitAll()
+                .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .antMatchers("/aposta/**").hasRole("APOSTADOR")
                 .antMatchers("/aposta/user/**").hasAnyRole("ADMIN", "APOSTADOR")
                 .anyRequest().authenticated()

@@ -1,15 +1,13 @@
-package br.uni.apostasuni.unibet.config.filter;
+package br.uni.apostasuni.unibet.config.security.filter;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
-import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -59,9 +57,11 @@ public class JWTValidationFilter extends BasicAuthenticationFilter {
                 .build().verify(token).getClaims().get("nome").asString();
         //.getSubject();
 
-        ArrayList<String> roles = (ArrayList<String>) JWT
-                .require(Algorithm.HMAC512( JWTAuthenticationFIlter.TOKEN_KEY ))
-                .build().verify(token).getClaims().get("roles").asList(String.class);
+        String[] roles1 = (String[] ) JWT.require(Algorithm.HMAC512( JWTAuthenticationFIlter.TOKEN_KEY )).build().verify(token).getClaims().get("ROLES").toString().replace("[","").replace("]","").split(",");
+        ArrayList<String> roles = new ArrayList<>();
+        for (String r: roles1){
+            roles.add(r);
+        }
 
         return new UsernamePasswordAuthenticationToken(login, "", getRoles(roles) );
     }

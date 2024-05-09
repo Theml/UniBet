@@ -1,4 +1,4 @@
-package br.uni.apostasuni.unibet.config.model;
+package br.uni.apostasuni.unibet.config.security.model;
 
 import br.uni.apostasuni.unibet.model.Usuario;
 import org.springframework.security.core.GrantedAuthority;
